@@ -1,27 +1,28 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import api from '../services/api';
+import { useNavigate } from 'react-router-dom';
+import API from '../services/api';
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/auth/login', { username, password });
-      localStorage.setItem('token', response.data.token);
-      navigate('/');
-    } catch (error) {
-      alert('Login failed: ' + (error.response?.data || error.message));
+      const res = await API.post('/auth/login', { username, password });
+      localStorage.setItem('token', res.data.token);
+      navigate('/portfolio'); // redirect after login
+    } catch (err) {
+      setError('Invalid credentials. Please try again.');
     }
   };
 
   return (
-    <div className="card" style={{ margin: 'auto' }}>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="card">
+      <h2>Login</h2>
+      <form onSubmit={handleLogin}>
         <div className="field">
           <label>Username</label>
           <input
@@ -42,12 +43,11 @@ const Login = () => {
             required
           />
         </div>
-        <button className="btn btn-primary" type="submit" style={{ width: '100%' }}>
-          Login
-        </button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <button className="btn btn-primary" type="submit">Login</button>
       </form>
       <p>
-        Don't have an account? <Link to="/register">Register here</Link>
+        Don’t have an account? <span style={{cursor:'pointer', color:'blue'}} onClick={() => navigate('/register')}>Register</span>
       </p>
     </div>
   );

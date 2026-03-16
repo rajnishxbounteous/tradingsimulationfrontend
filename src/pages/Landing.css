@@ -1,0 +1,65 @@
+.main-content {
+  margin-top: 80px; /* push below fixed nav */
+  padding: 1.5rem;
+}
+
+.card {
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  margin-bottom: 0.5rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+/* color toggle according to market status */
+.market-card.open {
+  box-shadow: 0 0 12px rgba(0, 200, 0, 0.4); /* light green glow */
+}
+
+.market-card.closed {
+  box-shadow: 0 0 12px rgba(200, 0, 0, 0.4); /* red glow */
+}
+
+.schedule-info {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0.5rem;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+.dot-open {
+  background-color: green;
+}
+
+.dot-closed {
+  background-color: red;
+}
+
+
+
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background: #eee;
+}

@@ -1,28 +1,28 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import api from '../services/api';
+import { useNavigate } from 'react-router-dom';
+import API from '../services/api';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await api.post('/auth/register', { username, password });
-      localStorage.setItem('token', response.data.token);
-      alert('Registration successful! You are now logged in.');
-      navigate('/');
-    } catch (error) {
-      alert('Registration failed: ' + (error.response?.data || error.message));
+      await API.post('/auth/register', { username, email, password });
+      navigate('/login'); // redirect after successful registration
+    } catch (err) {
+      setError('Registration failed. Try again.');
     }
   };
 
   return (
-    <div className="card" style={{ margin: 'auto' }}>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="card">
+      <h2>Register</h2>
+      <form onSubmit={handleRegister}>
         <div className="field">
           <label>Username</label>
           <input
@@ -30,6 +30,16 @@ const Register = () => {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div className="field">
+          <label>Email</label>
+          <input
+            className="input"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
@@ -43,11 +53,12 @@ const Register = () => {
             required
           />
         </div>
-        <button className="btn btn-primary" type="submit" style={{ width: '100%' }}>
-          Register
-        </button>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <button className="btn btn-primary" type="submit">Register</button>
       </form>
-      <p>Already have an account? <Link to="/login">Login here</Link></p>
+      <p>
+        Already have an account? <span style={{cursor:'pointer', color:'blue'}} onClick={() => navigate('/login')}>Login</span>
+      </p>
     </div>
   );
 };

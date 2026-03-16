@@ -1,36 +1,75 @@
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Trading from './pages/Trading';
-import PortfolioPage from './pages/Portfolio';
-import Market from './pages/Market';
-import StockAnalytics from './pages/StockAnalytics';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Portfolio from './pages/Portfolio';
+import Market from './pages/Market';
+import Trading from './pages/Trading';
+// import Analytics from './pages/Analytics';
+// import Orders from './pages/Orders'; // create later
+import Landing from './pages/Landing';
+import TopNav from './components/TopNav';
 import ProtectedRoute from './components/ProtectedRoute';
-import Layout from './components/Layout';
 
 function App() {
+  const token = localStorage.getItem('token');
+
   return (
     <Router>
-      <div className="app-container">
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/*" element={
+      {/* Show TopNav only if logged in */}
+      {token && <TopNav />}
+
+      <Routes>
+        {/* Public routes */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Protected routes */}
+        <Route
+          path="/landing"
+          element={
             <ProtectedRoute>
-              <Layout>
-                <Routes>
-                      <Route path="/" element={<PortfolioPage />} />
-                      <Route path="/portfolio" element={<PortfolioPage />} />
-                      <Route path="/market" element={<Market />} />
-                      <Route path="/analytics" element={<StockAnalytics />} />
-                      <Route path="/trading" element={<Trading />} />
-                </Routes>
-              </Layout>
+              <Landing />
             </ProtectedRoute>
-          } />
-        </Routes>
-      </div>
+          }
+        />
+        <Route
+          path="/portfolio"
+          element={
+            <ProtectedRoute>
+              <Portfolio />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/market"
+          element={
+            <ProtectedRoute>
+              <Market />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/trading"
+          element={
+            <ProtectedRoute>
+              <Trading />
+            </ProtectedRoute>
+          }
+        />
+        {/* <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} /> */}
+        {/* <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} /> */}
+
+        {/* Default redirect: if logged in → Landing, else → Login */}
+        <Route
+          path="/"
+          element={token ? <Navigate to="/landing" /> : <Navigate to="/login" />}
+        />
+      </Routes>
+
+      <ToastContainer />
     </Router>
   );
 }

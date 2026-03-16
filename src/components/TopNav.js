@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import logo from '../assets/tradeMarcoLogo.jpg'; // import your logo
 
 const TopNav = ({ onLogout }) => {
   const navigate = useNavigate();
@@ -7,10 +8,11 @@ const TopNav = ({ onLogout }) => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const menuItems = [
-    { path: '/portfolio', label: 'Portfolio' },
     { path: '/market', label: 'Market' },
-    { path: '/analytics', label: 'Stock Analytics' },
-    { path: '/trading', label: 'Trading' },
+    { path: '/trading', label: 'Trades' },
+    { path: '/portfolio', label: 'Portfolio' },
+    { path: '/analytics', label: 'Analytics' },
+    { path: '/orders', label: 'Orders' },
   ];
 
   const handleNavigation = (path) => {
@@ -19,31 +21,32 @@ const TopNav = ({ onLogout }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/login');
     if (onLogout) onLogout();
+    navigate('/login');
   };
 
   return (
     <header className="topnav">
       <div className="topnav-left">
-        <div className="brand" onClick={() => handleNavigation('/portfolio')}>
-          <span className="brand-icon">📈</span>
-          <span className="brand-name">Trading Simulator</span>
+        <div className="brand" onClick={() => handleNavigation('/landing')}>
+          <img src={logo} alt="Trading Simulator Logo" className="brand-logo" />
         </div>
-        <nav className="topnav-menu">
-          {menuItems.map((item) => (
-            <button
-              key={item.path}
-              className={`topnav-item ${location.pathname === item.path ? 'active' : ''}`}
-              onClick={() => handleNavigation(item.path)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
       </div>
 
+      <nav className="topnav-menu">
+        {menuItems.map((item) => (
+          <button
+            key={item.path}
+            className={`topnav-item ${location.pathname === item.path ? 'active' : ''}`}
+            onClick={() => handleNavigation(item.path)}
+          >
+            {item.label}
+          </button>
+        ))}
+      </nav>
+
       <div className="topnav-right">
+        <button className="notification">🔔</button>
         <button className="profile" onClick={() => setOpenMenu((open) => !open)}>
           <span className="profile-icon">👤</span>
           <span className="profile-name">Profile</span>
