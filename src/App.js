@@ -4,13 +4,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Portfolio from './pages/Portfolio';
-import Market from './pages/Market';
 import Trading from './pages/Trading';
-// import Analytics from './pages/Analytics';
-// import Orders from './pages/Orders'; // create later
 import Landing from './pages/Landing';
-import TopNav from './components/TopNav';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -18,9 +13,6 @@ function App() {
 
   return (
     <Router>
-      {/* Show TopNav only if logged in */}
-      {token && <TopNav />}
-
       <Routes>
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
@@ -36,22 +28,6 @@ function App() {
           }
         />
         <Route
-          path="/portfolio"
-          element={
-            <ProtectedRoute>
-              <Portfolio />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/market"
-          element={
-            <ProtectedRoute>
-              <Market />
-            </ProtectedRoute>
-          }
-        />
-        <Route
           path="/trading"
           element={
             <ProtectedRoute>
@@ -59,10 +35,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route path="/analytics" element={<ProtectedRoute><Analytics /></ProtectedRoute>} /> */}
-        {/* <Route path="/orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} /> */}
 
-        {/* Default redirect: if logged in → Landing, else → Login */}
+        {/* Default redirect */}
         <Route
           path="/"
           element={token ? <Navigate to="/landing" /> : <Navigate to="/login" />}

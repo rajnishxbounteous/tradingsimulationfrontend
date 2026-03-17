@@ -1,65 +1,52 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import logo from '../assets/tradeMarcoLogo.jpg'; // import your logo
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../assets/stockLogo.png';
+import './TopNav.css';
 
-const TopNav = ({ onLogout }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [openMenu, setOpenMenu] = useState(false);
+const TopNav = () => {
+  const [scrolled, setScrolled] = useState(false);
 
-  const menuItems = [
-    { path: '/market', label: 'Market' },
-    { path: '/trading', label: 'Trades' },
-    { path: '/portfolio', label: 'Portfolio' },
-    { path: '/analytics', label: 'Analytics' },
-    { path: '/orders', label: 'Orders' },
-  ];
-
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    if (onLogout) onLogout();
-    navigate('/login');
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="topnav">
-      <div className="topnav-left">
-        <div className="brand" onClick={() => handleNavigation('/landing')}>
-          <img src={logo} alt="Trading Simulator Logo" className="brand-logo" />
+    <div className={`topnav-container ${scrolled ? 'scrolled' : ''}`}>
+      <div className="topnav">
+        {/* Logo on left, moves inside bar when scrolled */}
+        <div className="nav-logo">
+          <Link to="/landing">
+            <img src={logo} alt="Logo" className="logo" />
+          </Link>
+        </div>
+
+        {/* Nav items center */}
+        <div className="nav-items">
+          <Link to="/landing">Home</Link>
+          <Link to="/portfolio">Portfolio</Link>
+          <Link to="/trades">Trades</Link>
+          <Link to="/reports">Reports</Link>
+        </div>
+
+        {/* Icons on right */}
+        <div className="nav-icons">
+          <button className="icon-btn">
+            <span className="material-icons">notifications</span>
+          </button>
+          <button className="icon-btn">
+            <span className="material-icons">account_circle</span>
+          </button>
         </div>
       </div>
-
-      <nav className="topnav-menu">
-        {menuItems.map((item) => (
-          <button
-            key={item.path}
-            className={`topnav-item ${location.pathname === item.path ? 'active' : ''}`}
-            onClick={() => handleNavigation(item.path)}
-          >
-            {item.label}
-          </button>
-        ))}
-      </nav>
-
-      <div className="topnav-right">
-        <button className="notification">🔔</button>
-        <button className="profile" onClick={() => setOpenMenu((open) => !open)}>
-          <span className="profile-icon">👤</span>
-          <span className="profile-name">Profile</span>
-        </button>
-        {openMenu && (
-          <div className="profile-menu">
-            <button className="profile-menu-item" onClick={handleLogout}>
-              Logout
-            </button>
-          </div>
-        )}
-      </div>
-    </header>
+    </div>
   );
 };
 

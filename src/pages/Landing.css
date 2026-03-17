@@ -1,65 +1,189 @@
-.main-content {
-  margin-top: 80px; /* push below fixed nav */
-  padding: 1.5rem;
+.landing-page {
+  min-height: 100vh;
+  padding: 80px 1.5rem 1.5rem;
+  background: url('/public/images/landingBgr.png') no-repeat center top;
+  background-size: auto;        /* keep image at natural size */
+  background-attachment: fixed; /* keeps it fixed while scrolling */
+  background-color: rgb(14, 14, 14); /* fallback color behind image */
+  position: relative;
 }
 
-.card {
-  background: #f9f9f9;
+/* Optional dark overlay for readability */
+.landing-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 0;
+}
+
+/* Ensure content sits above overlay */
+.stocks-grid, .topnav, .landing-logo, .market-card {
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo separate from nav bar */
+.landing-logo {
+  position: fixed;
+  top: 10px;
+  left: 15px;
+  z-index: 1100;
+}
+
+.logo-large {
+  height: 60px;
+  cursor: pointer;
+}
+
+/* Grid layout for 8 stocks: 4 per row */
+.stocks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Stock card styling */
+.stock-card {
+  background: rgba(0,0,128,0.9);
+  color: #fff;
   border-radius: 8px;
-  padding: 1rem 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-.card h2 {
+.stock-card h3 {
+  font-size: 0.9rem;
   margin-bottom: 0.5rem;
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
-/* color toggle according to market status */
+
+.change {
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+.change.up { color: lightgreen; }
+.change.down { color: #ff4d4d; }
+
+/* Market card same ratio as stock card, centered */
+.market-card {
+  /* border: 2px solid; */
+  background: rgba(0,0,139,0.9);
+  font-weight: bold;
+  width: 220px;       /* same width as stock card */
+  margin: 0 auto 1.5rem auto; /* center horizontally */
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+/* Blinking shadow when open/closed */
 .market-card.open {
-  box-shadow: 0 0 12px rgba(0, 200, 0, 0.4); /* light green glow */
+  animation: blink-green 1.5s infinite;
 }
 
 .market-card.closed {
-  box-shadow: 0 0 12px rgba(200, 0, 0, 0.4); /* red glow */
+  animation: blink-red 1.5s infinite;
 }
 
-.schedule-info {
-  font-size: 0.9rem;
-  color: #555;
-  margin-top: 0.5rem;
+@keyframes blink-green {
+  0%   { box-shadow: 0 0 10px 2px rgba(0,255,0,0.6); }
+  50%  { box-shadow: 0 0 20px 4px rgba(0,255,0,1); }
+  100% { box-shadow: 0 0 10px 2px rgba(0,255,0,0.6); }
+}
+
+@keyframes blink-red {
+  0%   { box-shadow: 0 0 10px 2px rgba(255,0,0,0.6); }
+  50%  { box-shadow: 0 0 20px 4px rgba(255,0,0,1); }
+  100% { box-shadow: 0 0 10px 2px rgba(255,0,0,0.6); }
 }
 
 .status-dot {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  margin-left: 8px;
+  margin-left: 6px;
 }
 
-.dot-open {
-  background-color: green;
+.dot-open { background-color: green; }
+.dot-closed { background-color: red; }
+
+.status-text {
+  font-size: 1rem;
+  margin: 0.3rem 0;
 }
 
-.dot-closed {
-  background-color: red;
+.timer-text {
+  font-size: 0.9rem;
+  margin: 0.3rem 0;
 }
 
-
-
-
-.table th,
-.table td {
-  padding: 0.75rem;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+.schedule-info {
+  font-size: 0.75rem;
+  color: #ddd;
+  margin-top: 0.4rem;
 }
 
-.table th {
-  background: #eee;
+/* Transparent Navbar */
+.topnav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1rem;
+  box-shadow: none;
+  z-index: 1000;
+}
+
+.nav-items {
+  display: flex;
+  gap: 2rem;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.nav-items a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-items a:hover {
+  color: #ffd700;
+}
+
+.nav-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.icon-btn {
+  background: rgba(255,255,255,0.9);
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn .material-icons {
+  font-size: 22px;
+  color: navy;
 }
