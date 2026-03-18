@@ -1,0 +1,183 @@
+.market-page {
+  min-height: 100vh;
+  background-image: url("/public/images/marketBgr.png"); /* use your image from public/images */
+  background-size: cover;           /* scale to cover entire area */
+  background-position: center;      /* center the image */
+  background-repeat: no-repeat;     /* prevent tiling */
+  background-attachment: fixed;     /* keep image fixed while scrolling */
+  padding: 20px;
+}
+
+.market-content {
+  position: relative;
+  z-index: 1;                       /* ensure content sits above background */
+  margin-top: 80px;                 /* push below TopNav */
+}
+
+/* Top section: status + summary side by side */
+.market-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+/* Smaller, centered cards */
+.status-card,
+.summary-card {
+  flex: 0 0 40%;        /* slightly smaller width */
+  max-width: 320px;     /* reduced max size */
+  text-align: center;
+  padding: 15px;        /* reduced padding */
+}
+
+.market-card {
+  background: #0d1b2a;              /* dark navy blue */
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #f1f1f1;                   /* light text for contrast */
+}
+
+.market-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+/* Status card colors */
+.status-card.open p {
+  color: #4caf50; /* green */
+  font-weight: bold;
+  font-size: 1.2rem; /* slightly smaller */
+  margin: 5px 0;
+}
+
+.status-card.closed p {
+  color: #f44336; /* red */
+  font-weight: bold;
+  font-size: 1.2rem; /* slightly smaller */
+  margin: 5px 0;
+}
+
+.status-card small {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #ddd;
+  margin-top: 6px;
+}
+
+/* Section headings */
+.section {
+  margin-bottom: 30px;
+}
+
+.section h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #f1f1f1;
+}
+
+/* Grid layout for gainers/losers cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+}
+
+.stock-card {
+  background: #1b263b;              /* slightly lighter dark blue */
+  border-radius: 6px;
+  padding: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #f1f1f1;
+}
+
+.stock-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+}
+
+.stock-card h4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+.stock-card p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #d1d1d1;
+}
+
+.gain-card {
+  border-top: 4px solid #4caf50;
+}
+
+.lose-card {
+  border-top: 4px solid #f44336;
+}
+
+/* News section */
+.news-section {
+  margin-top: 20px;
+}
+
+.news-section h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #f1f1f1;
+}
+
+.news-cards {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.news-card {
+  min-width: 250px;
+  background: #1b263b;
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #f1f1f1;
+}
+
+.news-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+}
+
+.news-card h4 {
+  margin: 0 0 5px;
+  font-size: 1rem;
+  color: #000000; /* gold accent */
+}
+
+.news-card p {
+  font-size: 0.85rem;
+  color: #d1d1d1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .market-top {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .status-card,
+  .summary-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}

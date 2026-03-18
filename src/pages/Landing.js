@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import API from '../services/api';
 import TopNav from '../components/TopNav';
-import logo from '../assets/stockLogo.png';
 import './Landing.css';
 
 const Landing = () => {
@@ -17,7 +16,7 @@ const Landing = () => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const res = await API.get('/market/status');
+        const res = await API.get('/market/status'); // corrected endpoint
         setMarketStatus(res.data.isOpen ? 'Open' : 'Closed');
       } catch (err) {
         console.error('Error fetching market status:', err);
@@ -66,8 +65,8 @@ const Landing = () => {
   useEffect(() => {
     const fetchStocks = async () => {
       try {
-        const res = await API.get('/stocks');
-        setStocks(res.data.slice(0, 8));
+        const res = await API.get('/stocks'); // corrected endpoint
+        setStocks(res.data.slice(0, 8)); // ensure 8 stocks
       } catch (err) {
         console.error('Error fetching stocks:', err);
       }
@@ -77,14 +76,9 @@ const Landing = () => {
 
   return (
     <div className="landing-page">
-      {/* Logo separate from nav bar */}
-      <div className="landing-logo">
-        <img src={logo} alt="Logo" className="logo-large" />
-      </div>
-
       <TopNav />
 
-      {/* Market Status Card above grid */}
+      {/* Market Status Card centered above */}
       <div className={`stock-card market-card ${marketStatus === 'Open' ? 'open' : 'closed'}`}>
         <h3>Market Status 
           <span className={`status-dot ${marketStatus === 'Open' ? 'dot-open' : 'dot-closed'}`}></span>
@@ -104,6 +98,9 @@ const Landing = () => {
             <p className="price">₹{stock.currentPrice}</p>
             <p className={`change ${stock.change >= 0 ? 'up' : 'down'}`}>
               {stock.change >= 0 ? '▲' : '▼'} {stock.change} ({stock.percentChange}%)
+            </p>
+            <p className="extra-info">
+              High: ₹{stock.high} | Low: ₹{stock.low} | Open: ₹{stock.open} | Prev Close: ₹{stock.previousClose}
             </p>
           </div>
         ))}

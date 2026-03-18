@@ -2,13 +2,12 @@
   min-height: 100vh;
   padding: 80px 1.5rem 1.5rem;
   background: url('/public/images/landingBgr.png') no-repeat center top;
-  background-size: auto;        /* keep image at natural size */
-  background-attachment: fixed; /* keeps it fixed while scrolling */
-  background-color: rgb(14, 14, 14); /* fallback color behind image */
+  background-size: auto;
+  background-attachment: fixed;
+  background-color: rgb(14, 14, 14);
   position: relative;
 }
 
-/* Optional dark overlay for readability */
 .landing-page::before {
   content: "";
   position: absolute;
@@ -17,23 +16,9 @@
   z-index: 0;
 }
 
-/* Ensure content sits above overlay */
-.stocks-grid, .topnav, .landing-logo, .market-card {
+.stocks-grid, .topnav, .market-card {
   position: relative;
   z-index: 1;
-}
-
-/* Logo separate from nav bar */
-.landing-logo {
-  position: fixed;
-  top: 10px;
-  left: 15px;
-  z-index: 1100;
-}
-
-.logo-large {
-  height: 60px;
-  cursor: pointer;
 }
 
 /* Grid layout for 8 stocks: 4 per row */
@@ -74,13 +59,12 @@
 
 /* Market card same ratio as stock card, centered */
 .market-card {
-  /* border: 2px solid; */
+  border: 1px solid rgb(2, 2, 0);
   background: rgba(0,0,139,0.9);
   font-weight: bold;
-  width: 220px;       /* same width as stock card */
-  margin: 0 auto 1.5rem auto; /* center horizontally */
+  width: 220px;
+  margin: 0 auto 1.5rem auto;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
   border-radius: 8px;
   padding: 1rem;
 }
@@ -133,57 +117,8 @@
   margin-top: 0.4rem;
 }
 
-/* Transparent Navbar */
-.topnav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 1rem;
-  box-shadow: none;
-  z-index: 1000;
-}
-
-.nav-items {
-  display: flex;
-  gap: 2rem;
-  flex-grow: 1;
-  justify-content: center;
-}
-
-.nav-items a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.nav-items a:hover {
-  color: #ffd700;
-}
-
-.nav-icons {
-  display: flex;
-  gap: 1rem;
-}
-
-.icon-btn {
-  background: rgba(255,255,255,0.9);
-  border: none;
-  border-radius: 50%;
-  width: 38px;
-  height: 38px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon-btn .material-icons {
-  font-size: 22px;
-  color: navy;
+.extra-info {
+  font-size: 0.75rem;
+  color: #ccc;
+  margin-top: 0.4rem;
 }

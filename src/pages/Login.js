@@ -10,15 +10,24 @@ const Login = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('token');
-  const isLoggedIn = !!token;
+  const accessToken = localStorage.getItem('accessToken');
+  const isLoggedIn = !!accessToken;
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      // Call backend login endpoint
       const res = await API.post('/auth/login', { username, password });
-      localStorage.setItem('token', res.data.token);
-      navigate('/landing'); // go to dashboard after login
+      // Expected backend response: { userId, accessToken, refreshToken }
+      const { userId, accessToken, refreshToken } = res.data;
+
+      // Save tokens and userId in localStorage
+      localStorage.setItem('userId', userId);
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('refreshToken', refreshToken);
+
+      // Navigate to landing/dashboard
+      navigate('/landing');
     } catch (err) {
       setError('Invalid credentials. Please try again.');
     }
